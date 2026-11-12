@@ -25,3 +25,14 @@ they want. At first the lines were printing over each other, so I added a lock
 around print to fix that. Nothing is actually synced yet, the customers just
 talk whenever, but that's fine for now. Next time I'll make the customers wait
 for the bank to open and add the door.
+
+## Session 2
+
+### Nov 12, 3:55pm - Plan
+Last time the customers just entered whenever, which is wrong because the bank
+should not be open until all 3 tellers are ready. So this session I want to:
+- Make the tellers count themselves as ready, and have the last one open the bank.
+- Make the customers wait for that before they do anything.
+- Add the door so only 2 customers can go through at a time.
+I think I can use an Event for the bank opening (set it once all tellers are
+ready) and a Semaphore with 2 permits for the door.
