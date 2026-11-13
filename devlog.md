@@ -58,3 +58,14 @@ teller so the plan for this session is to allow them to talk to each other.
 So what i believe i ened is to make a semaphore for free tellers plus a few 
 semaphores for each teller so they can take turns and a variable to hold the 
 customer ID and the transaction.
+
+### Nov 13, 1:02pm - Reflection
+Got the customers and tellers talking to eahcother, when a teller is free it puts itself in
+a list and adds to a teller_free semaphore then a customer waits on that, takes the
+first teller in the list and then they take turns with a few semaphores for
+each teller. The customer ID and the transaction go in a list spot for that
+teller so the teller can read them. Each teller now loops and serves more than
+one customer. I also needed a way to end the program because the tellers were
+stuck waiting forever after the last customer left so wha ti did is  main sets a closed flag
+and wakes up each teller so it can leave. I ran it a bunch of times with 5 and
+with 50 customers and it never got stuck.
