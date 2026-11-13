@@ -69,3 +69,14 @@ one customer. I also needed a way to end the program because the tellers were
 stuck waiting forever after the last customer left so wha ti did is  main sets a closed flag
 and wakes up each teller so it can leave. I ran it a bunch of times with 5 and
 with 50 customers and it never got stuck.
+
+### Nov 13, 1:41pm - Plan
+Now that customers and tellers can talk, this session I want to add the safe
+and the manager. The safe only fits 2 tellers at a time so it will be a
+semaphore that starts at 2, and the manager only talks to 1 teller at a time
+so that one starts at 1. If the customer wants a withdrawal the teller has to
+go get the manager's permission first, which takes 5 to 30ms. Then for every
+transaction the teller goes into the safe, which takes 10 to 50ms. I need to
+print before and after each of these so you can tell who is waiting and who
+is using it. I also want to double check that the manager and safe never have
+too many tellers at once.
