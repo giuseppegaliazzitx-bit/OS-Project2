@@ -28,7 +28,7 @@ for the bank to open and add the door.
 
 ## Session 2
 
-### Nov 12, 3:55pm - Plan
+### Nov 12, 3:56pm - Plan
 Last time the customers just entered whenever, which is wrong because the bank
 should not be open until all 3 tellers are ready. So this session I want to:
 - Make the tellers count themselves as ready, and have the last one open the bank.
@@ -36,3 +36,12 @@ should not be open until all 3 tellers are ready. So this session I want to:
 - Add the door so only 2 customers can go through at a time.
 I think I can use an Event for the bank opening (set it once all tellers are
 ready) and a Semaphore with 2 permits for the door.
+
+### Nov 12, 10:39pm - Reflection
+Finished session 2 plan after 2 days since i got tired. The tellers now add 
+themselves to a counter (with a lock so two tellers don't update it at the same
+time) and the last one to get ready sets the bank_open event. The customers 
+call bank_open.wait() so none of them enter until the bank is actually open, which
+I checked by seeing all the "ready" lines print before any "entered" line. The door
+is a Semaphore(2) that each customer acquires and releases so only 2 are in the
+doorway at once. Still no talking to the tellers yet which i left for the next session.

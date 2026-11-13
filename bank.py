@@ -1,35 +1,62 @@
 
 import threading
 import random
+import time
 
-# How many tellers and customers to start. The spec wants 3 tellers and
-# 50 customers, but I am starting small so the output is easy to read.
+# Number of tellers and customers
 NUM_TELLERS = 3
-NUM_CUSTOMERS = 3
+NUM_CUSTOMERS = 5
 
-# Lock so the print lines from different threads don't mix together
+# Lock so prints don't mix
 print_lock = threading.Lock()
 
+# Last teller to get ready opens the bank
+ready_lock = threading.Lock()
+tellers_ready = 0
+bank_open = threading.Event()
 
-# Print in the format the assignment wants: TYPE ID [OTHER ID]: MSG
+# Door lets 2 customers in at a time
+door = threading.Semaphore(2)
+
+
+# Print in the right format
 def log(thread_type, tid, msg, other=""):
     with print_lock:
         print(f"{thread_type} {tid} [{other}]: {msg}")
 
 
-# Teller thread, for now it just says it is ready and waiting
+# Teller thread
 def teller(tid):
+    global tellers_ready
     log("Teller", tid, "ready to serve")
+
+    with ready_lock:
+        tellers_ready += 1
+        if tellers_ready == NUM_TELLERS:
+            bank_open.set()
+
     log("Teller", tid, "waiting for a customer")
 
 
-# Customer thread, for now it just picks a transaction and says it
+# Customer thread
 def customer(cid):
     transaction = random.choice(["deposit", "withdrawal"])
     log("Customer", cid, f"wants to perform a {transaction} transaction")
 
+    # Wait a bit before showing up
+    time.sleep(random.uniform(0, 0.1))
 
-# Start all the teller threads, then all the customer threads, then wait
+    # Wait for the bank to open
+    bank_open.wait()
+
+    # Go through the door
+    log("Customer", cid, "going to the door to enter")
+    door.acquire()
+    log("Customer", cid, "entered the bank")
+    door.release()
+
+
+# Start tellers then customers then wait for all
 def main():
     threads = []
 
