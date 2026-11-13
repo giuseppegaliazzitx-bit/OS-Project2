@@ -45,3 +45,16 @@ call bank_open.wait() so none of them enter until the bank is actually open, whi
 I checked by seeing all the "ready" lines print before any "entered" line. The door
 is a Semaphore(2) that each customer acquires and releases so only 2 are in the
 doorway at once. Still no talking to the tellers yet which i left for the next session.
+
+## Session 3
+
+### Nov 13, 10:48am - Plan
+Right now the customers get into the bank but they never actually talk to a
+teller so the plan for this session is to allow them to talk to each other.
+- A customer waits for any teller that is free, then picks that teller.
+- The customer tells the teller its ID then the teller asks what it wants.
+- The customer gives the transaction and the teller says it is done.
+- Then the customer leaves and the teller goes back to waiting.
+So what i believe i ened is to make a semaphore for free tellers plus a few 
+semaphores for each teller so they can take turns and a variable to hold the 
+customer ID and the transaction.
