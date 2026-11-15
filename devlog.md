@@ -70,6 +70,8 @@ stuck waiting forever after the last customer left so wha ti did is  main sets a
 and wakes up each teller so it can leave. I ran it a bunch of times with 5 and
 with 50 customers and it never got stuck.
 
+## Session 4
+
 ### Nov 13, 1:41pm - Plan
 Now that customers and tellers can talk, this session I want to add the safe
 and the manager. The safe only fits 2 tellers at a time so it will be a
@@ -80,3 +82,13 @@ transaction the teller goes into the safe, which takes 10 to 50ms. I need to
 print before and after each of these so you can tell who is waiting and who
 is using it. I also want to double check that the manager and safe never have
 too many tellers at once.
+
+### Nov 14, 11:07am - Reflection
+Added the safe and the manager. The safe is a semaphore that starts at 2 and
+the manager is one that starts at 1. After the teller gets the transaction, if
+it is a withdrawal it goes to the manager first and sleeps 5 to 30ms, then for
+every transaction it goes in the safe and sleeps 10 to 50ms. Each one prints
+going, using and done so you can see who is waiting. I ran it a bunch of times
+with 5 and 50 customers and checked the output, the safe never had more than 2
+tellers and the manager never had more than 1 and it still never got stuck.
+Next session is running it with all 50 customers and cleaning up the output.

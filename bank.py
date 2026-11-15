@@ -34,6 +34,10 @@ customer_left = [threading.Semaphore(0) for _ in range(NUM_TELLERS)]
 teller_customer = [None] * NUM_TELLERS
 teller_txn = [None] * NUM_TELLERS
 
+# Safe fits 2 tellers and the manager talks to 1 at a time
+safe = threading.Semaphore(2)
+manager = threading.Semaphore(1)
+
 # Set when all customers are gone
 bank_closed = False
 
@@ -83,6 +87,23 @@ def teller(tid):
         gave_txn[tid].acquire()
         txn = teller_txn[tid]
         log("Teller", tid, f"handling {txn} transaction", other)
+
+        # Withdrawals need the manager first
+        if txn == "withdrawal":
+            log("Teller", tid, "going to the manager", other)
+            manager.acquire()
+            log("Teller", tid, "getting manager's permission", other)
+            time.sleep(random.uniform(0.005, 0.030))
+            log("Teller", tid, "got manager's permission", other)
+            manager.release()
+
+        # Go in the safe and do the transaction
+        log("Teller", tid, "going to safe", other)
+        safe.acquire()
+        log("Teller", tid, "enter safe", other)
+        time.sleep(random.uniform(0.010, 0.050))
+        log("Teller", tid, "leaving safe", other)
+        safe.release()
 
         # Tell the customer it is done and wait for them to leave
         log("Teller", tid, f"finishes {txn} transaction", other)
