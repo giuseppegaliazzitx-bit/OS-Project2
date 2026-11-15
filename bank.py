@@ -5,7 +5,7 @@ import time
 
 # Number of tellers and customers
 NUM_TELLERS = 3
-NUM_CUSTOMERS = 5
+NUM_CUSTOMERS = 50
 
 # Lock so prints don't mix
 print_lock = threading.Lock()
@@ -106,9 +106,9 @@ def teller(tid):
         safe.release()
 
         # Tell the customer it is done and wait for them to leave
-        log("Teller", tid, f"finishes {txn} transaction", other)
+        log("Teller", tid, f"finishes {txn} transaction.", other)
         txn_done[tid].release()
-        log("Teller", tid, "wait for customer to leave", other)
+        log("Teller", tid, "wait for customer to leave.", other)
         customer_left[tid].acquire()
 
 
@@ -124,13 +124,14 @@ def customer(cid):
     bank_open.wait()
 
     # Go through the door
-    log("Customer", cid, "going to the door to enter")
+    log("Customer", cid, "going to bank.")
     door.acquire()
-    log("Customer", cid, "entered the bank")
+    log("Customer", cid, "entering bank.")
     door.release()
 
     # Wait in line until a teller is free then take it
-    log("Customer", cid, "getting in line")
+    log("Customer", cid, "getting in line.")
+    log("Customer", cid, "selecting a teller.")
     teller_free.acquire()
     with line_lock:
         tid = free_tellers.pop(0)

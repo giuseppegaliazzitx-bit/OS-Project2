@@ -103,3 +103,12 @@ Some of my messages are worded a little different from the sample like
 go through the sample and fix those. I also want to run it a lot of times with
 50 customers to make sure it always ends and never gets stuck, and that every
 customer leaves the bank.
+
+### Nov 15, 12:58pm - Reflection
+Changed it to 50 customers and went through the sample output line by line to
+fix my messages. The customer now says "going to bank.", "entering bank.",
+"getting in line." and "selecting a teller." and the teller messages that had
+periods in the sample have them now too. I ran it a couple of times with 50
+customers and every time all 50 left the bank, the safe never had more than 2
+tellers, the manager never had more than 1 and it always printed that the bank
+closes at the end.
