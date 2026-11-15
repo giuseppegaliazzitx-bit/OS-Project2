@@ -92,3 +92,14 @@ going, using and done so you can see who is waiting. I ran it a bunch of times
 with 5 and 50 customers and checked the output, the safe never had more than 2
 tellers and the manager never had more than 1 and it still never got stuck.
 Next session is running it with all 50 customers and cleaning up the output.
+
+## Session 5
+
+### Nov 15, 11:17am - Plan
+The safe and the manager work now so this should be the last session. I want
+to switch to the full 50 customers and make the output match the sample run.
+Some of my messages are worded a little different from the sample like
+"going to the door to enter" when the sample says "going to bank." so I will
+go through the sample and fix those. I also want to run it a lot of times with
+50 customers to make sure it always ends and never gets stuck, and that every
+customer leaves the bank.
