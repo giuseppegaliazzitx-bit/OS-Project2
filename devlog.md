@@ -1,3 +1,6 @@
+# Name: Giuseppe Galiazzi
+# NetId: dal315218
+
 # Devlog - CS4348 Project 2 (Bank Simulation)
 
 ## Session 1

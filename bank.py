@@ -1,3 +1,5 @@
+# Name: Giuseppe Galiazzi
+# NetId: dal315218
 
 import threading
 import random
